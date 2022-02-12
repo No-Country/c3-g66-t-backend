@@ -24,6 +24,7 @@ class ExpressServer {
     this.app.head("/status", (req, res) => {
       res.status(200).end();
     });
+    this.app.use(`${this.prefix}/auth/register`, require("../../routes/auth"));
   }
 
   _errorHandler() {
