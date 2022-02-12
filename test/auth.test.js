@@ -7,7 +7,6 @@ let connection;
 
 beforeAll(async () => {
   connection = await connectDatabase();
-  console.log(process.env.NODE_ENV);
 });
 afterEach(async () => {
   await User.deleteMany();
