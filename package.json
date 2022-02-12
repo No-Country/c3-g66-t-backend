@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "SET NODE_ENV=development & nodemon src/index.js",
     "start": "SET NODE_ENV=production & node src/index.js",
-    "test": "SET NODE_ENV=test",
+    "test": "SET NODE_ENV=test & jest",
     "dev-l": "NODE_ENV=development nodemon src/index.js",
-    "test-l": "NODE_ENV=test"
+    "test-l": "NODE_ENV=test jest"
   },
   "repository": {
     "type": "git",
