@@ -11,6 +11,7 @@ const initialUsers = [
     email: "john@doe.com",
     phone: "+541101234567",
     password: "12345678",
+    img:"picture.com/asd.jpg"
   },
 ];
 
