@@ -10,6 +10,7 @@ const connectDatabase = async () => {
     });
 
     logger.info(`DB is CONNECTED ${CONNECTION.connection.host}`);
+    return CONNECTION;
   } catch (err) {
     logger.error(`Error at Database connection\n ${err}`);
   }
