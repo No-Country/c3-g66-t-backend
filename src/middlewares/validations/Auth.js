@@ -64,3 +64,11 @@ exports.registerValidations = [
   imgUrl,
   validResult,
 ];
+
+exports.loginValidations = [
+  emailRequired,
+  emailIsEmail,
+  passwordRequired,
+  passwordString,
+  validResult,
+];
