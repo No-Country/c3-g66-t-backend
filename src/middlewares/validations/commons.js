@@ -5,7 +5,7 @@ const AuthService = require("../../services/Auth");
 
 //    USER / AUTH
 exports.emailIsUniqueCheck = async email => {
-  const userFound = User.findOne({ email });
+  const userFound = await User.findOne({ email });
   if (userFound) {
     throw new ErrorResponse(400, undefined, "Email is already taken");
   }
