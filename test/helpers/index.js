@@ -7,11 +7,11 @@ const initialUsers = [
   {
     firstname: "John",
     lastname: "Doe",
-    dni: 12345678,
+    dni: "12345678",
     email: "john@doe.com",
     phone: "+541101234567",
     password: "12345678",
-    img:"picture.com/asd.jpg"
+    img:"https://i.blogs.es/b54943/god1/840_560.jpg"
   },
 ];
 
