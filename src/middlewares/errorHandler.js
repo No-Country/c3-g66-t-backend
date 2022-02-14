@@ -8,10 +8,8 @@ module.exports = (err, req, res, next) => {
   logger.error(`${err.stack}`);
 
   res.status(code).json({
-    error: {
-      code,
-      message: err.message,
-      data: err.data,
-    },
+    code,
+    message: err.message,
+    data: err.data,
   });
 };
