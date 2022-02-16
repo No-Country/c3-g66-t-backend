@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/No-Country/c3-g66-t-backend#readme",
   "dependencies": {
+    "axios": "^0.26.0",
     "bcrypt": "^5.0.1",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
