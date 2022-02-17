@@ -20,4 +20,8 @@ module.exports = {
     secret: process.env.JWT_SECRET_KEY || "s3cr3t",
     expires: process.env.JWT_EXPIRE || "5m",
   },
+  mapbox: {
+    url: process.env.MAPBOX_URL,
+    apiKey: process.env.MAPBOX_APIKEY
+  }
 };

@@ -26,9 +26,12 @@ class ExpressServer {
       res.status(200).end();
     });
     this.app.use(`${this.prefix}/auth`, require("../../routes/auth"));
+    this.app.use(`${this.prefix}/location`, require("../../routes/location"));
     // Esta ruta tiene que estar siempre al ultimo
     this.app.use("*", (req, res) => {
-      res.status(404).json(new Success());
+      res
+        .status(404)
+        .json(new Success(404, "Not Found", "Route not regitered"));
     });
   }
 
