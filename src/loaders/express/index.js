@@ -3,6 +3,7 @@ const process = require("process");
 const morgan = require("morgan");
 const cors = require("cors");
 const logger = require("../../helpers/logger");
+const Success = require("../../helpers/SuccessResponse");
 const { port, api } = require("../../config");
 
 class ExpressServer {
@@ -25,6 +26,13 @@ class ExpressServer {
       res.status(200).end();
     });
     this.app.use(`${this.prefix}/auth`, require("../../routes/auth"));
+    this.app.use(`${this.prefix}/location`, require("../../routes/location"));
+    // Esta ruta tiene que estar siempre al ultimo
+    this.app.use("*", (req, res) => {
+      res
+        .status(404)
+        .json(new Success(404, "Not Found", "Route not regitered"));
+    });
   }
 
   _errorHandler() {
