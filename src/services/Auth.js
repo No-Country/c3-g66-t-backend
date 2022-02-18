@@ -32,8 +32,10 @@ class Auth {
       throw new ErrorResponse(400, undefined, "email or password are wrong");
     }
     user.password = undefined;
-    user.token = this._generateToken(user._id);
-    return user;
+    const token = this._generateToken(user._id);
+    user.token = token;
+
+    return { ...user._doc, token };
   }
 
   async _encrypt(password) {
