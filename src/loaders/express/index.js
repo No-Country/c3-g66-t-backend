@@ -27,6 +27,7 @@ class ExpressServer {
     });
     this.app.use(`${this.prefix}/auth`, require("../../routes/auth"));
     this.app.use(`${this.prefix}/location`, require("../../routes/location"));
+    this.app.use(`${this.prefix}/hotel`, require("../../routes/hotel"));
     // Esta ruta tiene que estar siempre al ultimo
     this.app.use("*", (req, res) => {
       res
