@@ -168,4 +168,5 @@ exports.hotelListValidation = [
   themeIdsAreValid,
   accommodationIds,
   childrenAges,
+  validResult,
 ];
