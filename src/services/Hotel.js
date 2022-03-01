@@ -4,7 +4,7 @@ const axios = require("axios").default;
 class HotelService {
   constructor() {
     // prettier-ignore
-    this.url = "https://hotels-com-provider.p.rapidapi.com/v1/hotels/nearby?",
+    this.url = "https://hotels-com-provider.p.rapidapi.com/v1/hotels/",
     this._querys = {
       latitude: "-22.911",
       longitude: "-43.2094",
@@ -42,11 +42,51 @@ class HotelService {
     const querys = new URLSearchParams(this._querys).toString();
 
     try {
-      const res = await axios.get(this.url + querys, {
+      const res = await axios.get(this.url + "nearby?" + querys, {
         headers: { "x-rapidapi-key": process.env.API_KEY },
       });
 
       return res.data.searchResults.results;
+    } catch (error) {
+      throw new ErrorResponse(
+        error.response.status,
+        error.response.message,
+        error.response.statusText
+      );
+    }
+  }
+
+  async getPhotoById(params) {
+    this._querys.hotel_id = params.hotel_id || "523378112";
+
+    const querys = new URLSearchParams(this._querys).toString();
+
+    try {
+      const res = await axios.get(this.url + "photos?" + querys, {
+        headers: { "x-rapidapi-key": process.env.API_KEY },
+      });
+
+      return res.data;
+    } catch (error) {
+      throw new ErrorResponse(
+        error.response.status,
+        error.response.message,
+        error.response.statusText
+      );
+    }
+  }
+
+  async getReviewsById(params) {
+    this._querys.hotel_id = params.hotel_id || "523378112";
+
+    const querys = new URLSearchParams(this._querys).toString();
+
+    try {
+      const res = await axios.get(this.url + "reviews?" + querys, {
+        headers: { "x-rapidapi-key": process.env.API_KEY },
+      });
+
+      return res.data;
     } catch (error) {
       throw new ErrorResponse(
         error.response.status,

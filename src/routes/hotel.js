@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const { list } = require("../controllers/hotel");
-const hotelByIdController = require("../controllers/hotelById");
+const { list, photos, reviews } = require("../controllers/hotel");
 
 const router = Router();
 
 router.route("/list").get(list);
-router.route("/single/:id").get(hotelByIdController.id);
+router.route("/photos").get(photos);
+router.route("/reviews").get(reviews);
 
 module.exports = router;
