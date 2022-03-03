@@ -1,6 +1,7 @@
 const Success = require("../helpers/SuccessResponse");
 const ErrorResponse = require("../helpers/ErrorResponse");
 const HotelService = require("../services/Hotel");
+const Reviews = require("../services/Reviews");
 
 exports.list = async (req, res, next) => {
   try {
@@ -51,5 +52,33 @@ exports.reviews = async (req, res, next) => {
     res.status(200).json(new Success(200, "Hotels Reviews Finded", data));
   } catch (error) {
     next(new ErrorResponse(error.code, error.message, error.data));
+  }
+};
+
+exports.localReviews = async (req, res, next) => {
+  try {
+    const data = await Reviews.find(req.query.hotel_id);
+    res.status(200).json(new Success(200, "Local reviews", data));
+  } catch (error) {
+    next(new ErrorResponse());
+  }
+};
+exports.createReview = async (req, res, next) => {
+  try {
+    const { title, rating, summary } = req.body;
+    const data = await Reviews.create(req.user, req.query.hotel_id, {
+      title,
+      rating,
+      summary,
+    });
+    res.status(201).json(new Success(201, "created review", data));
+  } catch (error) {
+    next(
+      new ErrorResponse(
+        error.code,
+        error.message || "Couldn't create review",
+        error.data || "Something went wrong"
+      )
+    );
   }
 };
