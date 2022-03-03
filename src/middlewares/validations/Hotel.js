@@ -1,6 +1,6 @@
-const { query } = require("express-validator");
+const { query, body } = require("express-validator");
 
-const { validResult } = require("./commons");
+const { validResult, validateJWT } = require("./commons");
 const {
   LOCALE_ENUM,
   DATE_REGEX,
@@ -158,6 +158,13 @@ const childrenAges = query(
     return true;
   })
   .optional();
+const hotelIdRequired = query(
+  "hotel_id",
+  "hotel_id query is not defined"
+).notEmpty();
+const hotelIdNumeric = query("hotel_id", "hotel_id its not a number")
+  .isNumeric()
+  .optional();
 
 exports.hotelListValidation = [
   localeIsValid,
@@ -177,5 +184,32 @@ exports.hotelListValidation = [
   themeIdsAreValid,
   accommodationIds,
   childrenAges,
+  validResult,
+];
+
+exports.reviewsValidations = [hotelIdRequired, hotelIdNumeric, validResult];
+exports.photosValidations = [hotelIdRequired, hotelIdNumeric, validResult];
+
+const titleRequired = body("title", "title is required").notEmpty();
+const titleString = body("title", "title must be an string")
+  .isString()
+  .optional();
+const summaryString = body("summary", "summary must be an string")
+  .isString()
+  .optional();
+const ratingRequired = body("rating", "rating is required").notEmpty();
+const ratingNumeric = body("rating", "rating must be a number between 1 & 10")
+  .isFloat({ min: 1, max: 10 })
+  .optional();
+
+exports.createReviewValidations = [
+  validateJWT,
+  hotelIdRequired,
+  hotelIdNumeric,
+  titleRequired,
+  titleString,
+  summaryString,
+  ratingRequired,
+  ratingNumeric,
   validResult,
 ];
