@@ -1,15 +1,14 @@
 const Success = require("../helpers/SuccessResponse");
 const ErrorResponse = require("../helpers/ErrorResponse");
 const HotelService = require("../services/Hotel");
-const Hotel = require("../services/Hotel");
 
 exports.list = async (req, res, next) => {
   try {
-    const data = await HotelService.getList(req.query);
+    const data = await new HotelService(req.query).getList();
 
     const resData = data.map(e => {
       return {
-        id: e.id,
+        hotel_id: e.id,
         name: e.name,
         starRating: e.starRating,
         address: e.address,
@@ -20,7 +19,6 @@ exports.list = async (req, res, next) => {
         thumbnailUrl: e.optimizedThumbUrls,
       };
     });
-    HotelService._clearQuerys();
 
     res.status(200).json(new Success(200, "Hotels List Finded", resData));
   } catch (error) {
@@ -31,7 +29,7 @@ exports.list = async (req, res, next) => {
 
 exports.photos = async (req, res, next) => {
   try {
-    const data = await HotelService.getPhotoById(req.query);
+    const data = await new HotelService(req.query).getPhotoById();
 
     const resData = data.map(e => {
       return {
@@ -39,8 +37,6 @@ exports.photos = async (req, res, next) => {
         image_url: e.mainUrl,
       };
     });
-
-    HotelService._clearQuerys();
 
     res.status(200).json(new Success(200, "Hotels Photos Finded", resData));
   } catch (error) {
@@ -50,16 +46,7 @@ exports.photos = async (req, res, next) => {
 
 exports.reviews = async (req, res, next) => {
   try {
-    const data = await HotelService.getReviewsById(req.query);
-
-    /*const resData = data.map(e => {
-      return {
-        id: e.imageId,
-        image_url: e.mainUrl,
-      };
-    });*/
-
-    HotelService._clearQuerys();
+    const data = await new HotelService(req.query).getReviewsById();
 
     res.status(200).json(new Success(200, "Hotels Reviews Finded", data));
   } catch (error) {

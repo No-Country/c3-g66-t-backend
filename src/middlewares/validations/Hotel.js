@@ -1,6 +1,5 @@
 const { query } = require("express-validator");
 
-const ErrorResponse = require("../../helpers/ErrorResponse");
 const { validResult } = require("./commons");
 const {
   LOCALE_ENUM,
@@ -13,12 +12,14 @@ const {
 } = require("../../config/constants");
 
 // LOCALE
-const localeIsValid = query("locale", "locale value its not supported")
+const localeIsValid = query("locale")
   .custom(e => {
     if (!LOCALE_ENUM.includes(e)) {
-      throw new Error();
+      return false;
     }
+    return true;
   })
+  .withMessage("locale value its not supported")
   .optional();
 
 // CHECKIN
@@ -31,8 +32,9 @@ const checkinDateRegex = query("checkin_date")
   .withMessage("checkin_date query must be a string")
   .custom(value => {
     if (!value.match(DATE_REGEX)) {
-      throw new Error();
+      return false;
     }
+    return true;
   })
   .withMessage("checkin_date format must be YYYY-MM-DD")
   .optional();
@@ -47,8 +49,9 @@ const checkoutDateRegex = query("checkout_date")
   .withMessage("checkout_date query must be a string")
   .custom(value => {
     if (!value.match(DATE_REGEX)) {
-      throw new Error();
+      return false;
     }
+    return true;
   })
   .withMessage("checkout_date format must be YYYY-MM-DD")
   .optional();
@@ -72,23 +75,23 @@ const longitudeNumeric = query("longitude", "longitude must be a number")
   .optional();
 
 // SORT
-const sortOrderIsValid = query(
-  "sort_order",
-  "sort_order value is not supported"
-)
+const sortOrderIsValid = query("sort_order")
   .custom(value => {
     if (!ORDER_ENUM.includes(value)) {
-      throw new Error();
+      return false;
     }
+    return true;
   })
+  .withMessage("sort_order value is not supported")
   .optional();
 
 // Currency
 const currencyIsValid = query("currency", "currency value its not supported")
   .custom(value => {
     if (!CURRENCY_ENUM.includes(value)) {
-      throw new Error();
+      return false;
     }
+    return true;
   })
   .optional();
 
@@ -100,9 +103,10 @@ const amenityIdsAreValid = query(
   .custom(value => {
     value.split(",").map(e => {
       if (!AMENITIES_ENUM.includes(Number(e))) {
-        throw new Error();
+        return false;
       }
     });
+    return true;
   })
   .optional();
 const priceMax = query("price_max")
@@ -119,9 +123,10 @@ const themeIdsAreValid = query(
   .custom(value => {
     value.split(",").forEach(e => {
       if (!THEMES_ENUM.includes(Number(e))) {
-        throw new Error();
+        return false;
       }
     });
+    return true;
   })
   .optional();
 
@@ -132,23 +137,27 @@ const accommodationIds = query(
   .custom(value => {
     value.split(",").forEach(e => {
       if (!ACCOMODATIONS_ENUM.includes(Number(e))) {
-        throw new Error();
+        return false;
       }
     });
+    return true;
   })
   .optional();
 
 const childrenAges = query(
   "children_ages",
   "One o more children_ages are invalid"
-).custom(value => {
-  const ages = value.spit(",").map(e => {
-    const age = Number(e);
-    if (age > 100 || age < 0 || isNaN(age)) {
-      throw new Error();
-    }
-  });
-});
+)
+  .custom(value => {
+    const ages = value?.split(",").map(e => {
+      const age = Number(e);
+      if (age > 100 || age < 0 || isNaN(age)) {
+        return false;
+      }
+    });
+    return true;
+  })
+  .optional();
 
 exports.hotelListValidation = [
   localeIsValid,
