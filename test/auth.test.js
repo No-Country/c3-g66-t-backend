@@ -58,6 +58,7 @@ describe("LOGIN", () => {
       .post(`${api.prefix}/auth/login`)
       .send({ email, password });
     expect(res.body.data.firstname).toBe("John");
+    expect(res.body.data._id).toBeDefined();
     expect(res.body.data.lastname).toBe("Doe");
     expect(res.body.data.dni).toBe("12345678");
     expect(res.body.data.email).toBe("john@doe.com");
@@ -66,5 +67,6 @@ describe("LOGIN", () => {
       "https://i.blogs.es/b54943/god1/840_560.jpg"
     );
     expect(res.body.data.password).not.toBeDefined();
+    expect(res.body.data.token).toBeDefined();
   });
 });
