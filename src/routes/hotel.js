@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { list, photos, reviews } = require("../controllers/hotel");
+//const { hotelListValidation } = require("../middlewares/validations/Hotel");
 
 const router = Router();
 
