@@ -22,6 +22,13 @@ module.exports = {
   },
   mapbox: {
     url: process.env.MAPBOX_URL,
-    apiKey: process.env.MAPBOX_APIKEY
-  }
+    apiKey: process.env.MAPBOX_APIKEY,
+  },
+  hotels: {
+    url:
+      process.env.HOTELS_URL ||
+      "https://hotels-com-provider.p.rapidapi.com/v1/hotels",
+    host: process.env.HOTELS_HOST || "hotels-com-provider.p.rapidapi.com",
+    key: process.env.HOTELS_KEY || process.env.API_KEY,
+  },
 };
