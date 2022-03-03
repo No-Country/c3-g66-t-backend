@@ -2,17 +2,17 @@ const Review = require("../models/HotelReview");
 const ErrorResponse = require("../helpers/ErrorResponse");
 
 class Reviews {
-  async find(id) {
-    const reviews = await Review.find({ hotel: id }).populate(
+  async find(hotelId) {
+    const reviews = await Review.find({ hotel: hotelId }).populate(
       "user",
-      "firstname +lastname +img +_id"
+      "firstname lastname img _id"
     );
-    console.log(reviews);
+    return reviews;
   }
 
-  async create(user, body) {
+  async create(user, hotel, body) {
     try {
-      const { hotel, title, rating, summary } = body;
+      const { title, rating, summary } = body;
 
       const newReview = await Review.create({
         hotel,
@@ -77,4 +77,4 @@ class Reviews {
   }
 }
 
-module.exports = Reviews;
+module.exports = new Reviews();
