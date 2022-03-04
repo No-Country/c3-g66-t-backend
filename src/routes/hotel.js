@@ -6,6 +6,7 @@ const {
   localReviews,
   createReview,
   editReview,
+  deleteReview,
 } = require("../controllers/hotel");
 const {
   hotelListValidation,
@@ -13,6 +14,7 @@ const {
   reviewsValidations,
   createReviewValidations,
   editReviewValidations,
+  deleteReviewValidations,
 } = require("../middlewares/validations/Hotel");
 
 const router = Router();
@@ -24,5 +26,8 @@ router
   .route("/localreviews")
   .get(reviewsValidations, localReviews)
   .post(createReviewValidations, createReview);
-router.route("/localreviews/:reviewId").put(editReviewValidations, editReview);
+router
+  .route("/localreviews/:reviewId")
+  .put(editReviewValidations, editReview)
+  .delete(deleteReviewValidations, deleteReview);
 module.exports = router;
