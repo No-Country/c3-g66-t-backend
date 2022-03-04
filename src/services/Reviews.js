@@ -43,30 +43,45 @@ class Reviews {
       );
     }
   }
+  /**
+   * Edit an review and return the new review
+   * @param {Object} user The user document.
+   * @param {String} id The hotel of the id
+   * @param {Object} update The fields you want to update
+   * @returns
+   */
   async edit(user, id, update) {
-    try {
-      const query = await Review.findById(id).exec(async (err, review) => {
-        if (err) {
-          throw new ErrorResponse(undefined, undefined, err.message);
-        }
-        if (user._id !== review.user) {
+    const data = await Review.findById(id)
+      .exec()
+      .then(review => {
+        if (user._id.toString() !== review.user.toString()) {
           throw new ErrorResponse(undefined, undefined, "Unauthorized user");
         }
-        console.log(review);
-        // await review.save();
+        Object.keys(update).forEach(key => {
+          (update[key] === undefined || update[key] === "") &&
+            delete update[key];
+          update[key] ? (review[key] = update[key]) : null;
+        });
+        return review.save();
+      })
+      .then(review => review.populate("user", "firstname lastname img _id"))
+      .catch(err => {
+        throw new ErrorResponse(undefined, undefined, err.message);
       });
-      console.log(query);
-    } catch (error) {
-      throw new ErrorResponse(
-        undefined,
-        undefined,
-        error.data || error.message
-      );
-    }
+    return data;
   }
+
   async delete(user, id) {
     try {
-      await Review.findById(id);
+      await Review.findById(id)
+        .exec()
+        .then(review => {
+          if (user._id.toString() !== review.user.toString()) {
+            throw new ErrorResponse(undefined, undefined, "Unauthorized user");
+          }
+          return review.remove();
+        });
+      return `Document ${id} deleted`;
     } catch (error) {
       throw new ErrorResponse(
         error.code || 500,
