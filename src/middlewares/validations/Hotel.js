@@ -213,3 +213,10 @@ exports.createReviewValidations = [
   ratingNumeric,
   validResult,
 ];
+exports.editReviewValidations = [
+  validateJWT,
+  titleString,
+  summaryString,
+  ratingNumeric,
+  validResult,
+];
