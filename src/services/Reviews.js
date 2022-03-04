@@ -54,8 +54,11 @@ class Reviews {
     const data = await Review.findById(id)
       .exec()
       .then(review => {
+        if (!review) {
+          throw new ErrorResponse(204, "No Content", "Review doesn't exist");
+        }
         if (user._id.toString() !== review.user.toString()) {
-          throw new ErrorResponse(undefined, undefined, "Unauthorized user");
+          throw new ErrorResponse(401, undefined, "Unauthorized user");
         }
         Object.keys(update).forEach(key => {
           (update[key] === undefined || update[key] === "") &&
@@ -76,12 +79,15 @@ class Reviews {
       await Review.findById(id)
         .exec()
         .then(review => {
+          if (!review) {
+            throw new ErrorResponse(204, "No Content", "Review doesn't exist");
+          }
           if (user._id.toString() !== review.user.toString()) {
             throw new ErrorResponse(undefined, undefined, "Unauthorized user");
           }
           return review.remove();
         });
-      return `Document ${id} deleted`;
+      return `Review ${id} deleted`;
     } catch (error) {
       throw new ErrorResponse(
         error.code || 500,
