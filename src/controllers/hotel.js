@@ -97,3 +97,11 @@ exports.editReview = async (req, res, next) => {
     );
   }
 };
+exports.deleteReview = async (req, res, next) => {
+  try {
+    const data = await Reviews.delete(req.user, req.params.hotelId);
+    res.status(202).json(202, "Review Deleted", data);
+  } catch (error) {
+    next(new ErrorResponse(error.code, error.message, error.data));
+  }
+};
