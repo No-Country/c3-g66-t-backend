@@ -5,12 +5,14 @@ const {
   reviews,
   localReviews,
   createReview,
+  editReview,
 } = require("../controllers/hotel");
 const {
   hotelListValidation,
   photosValidations,
   reviewsValidations,
   createReviewValidations,
+  editReviewValidations,
 } = require("../middlewares/validations/Hotel");
 
 const router = Router();
@@ -22,5 +24,5 @@ router
   .route("/localreviews")
   .get(reviewsValidations, localReviews)
   .post(createReviewValidations, createReview);
-
+router.route("/localreviews/:reviewId").put(editReviewValidations, editReview);
 module.exports = router;
