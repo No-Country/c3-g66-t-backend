@@ -23,7 +23,6 @@ exports.list = async (req, res, next) => {
 
     res.status(200).json(new Success(200, "Hotels List Finded", resData));
   } catch (error) {
-    console.log(error);
     next(new ErrorResponse(error.code, error.message, error.data));
   }
 };
@@ -71,12 +70,28 @@ exports.createReview = async (req, res, next) => {
       rating,
       summary,
     });
-    res.status(201).json(new Success(201, "created review", data));
+    res.status(201).json(new Success(201, "Review created", data));
   } catch (error) {
     next(
       new ErrorResponse(
         error.code,
         error.message || "Couldn't create review",
+        error.data || "Something went wrong"
+      )
+    );
+  }
+};
+exports.editReview = async (req, res, next) => {
+  try {
+    const { title, summary, rating } = req.body;
+    const body = { title, summary, rating };
+    const data = await Reviews.edit(req.user, req.params.reviewId, body);
+    res.status(200).json(new Success(200, "Review edited", data));
+  } catch (error) {
+    next(
+      new ErrorResponse(
+        error.code,
+        error.message || "Couldn't edit review",
         error.data || "Something went wrong"
       )
     );
