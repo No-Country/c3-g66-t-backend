@@ -11,8 +11,9 @@ const initialUsers = [
     email: "john@doe.com",
     phone: "+541101234567",
     password: "12345678",
-    img:"https://i.blogs.es/b54943/god1/840_560.jpg"
+    img: "https://i.blogs.es/b54943/god1/840_560.jpg",
   },
 ];
 
-module.exports = { server: api, initialUsers };
+const reviews = [{}, {}];
+module.exports = { server: api, initialUsers, reviews };

@@ -9,6 +9,7 @@ exports.emailIsUniqueCheck = async email => {
   if (userFound) {
     throw new ErrorResponse(400, undefined, "Email is already taken");
   }
+  return true;
 };
 exports.validateJWT = async (req, res, next) => {
   try {

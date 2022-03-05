@@ -1,4 +1,3 @@
-const connectDatabase = require("../src/loaders/database");
 const { api } = require("../src/config");
 const { server } = require("./helpers");
 const User = require("../src/models/User");
