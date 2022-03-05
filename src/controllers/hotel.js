@@ -99,9 +99,15 @@ exports.editReview = async (req, res, next) => {
 };
 exports.deleteReview = async (req, res, next) => {
   try {
-    const data = await Reviews.delete(req.user, req.params.hotelId);
-    res.status(202).json(202, "Review Deleted", data);
+    const data = await Reviews.delete(req.user, req.params.reviewId);
+    res.status(202).json(new Success(202, "Review Deleted", data));
   } catch (error) {
-    next(new ErrorResponse(error.code, error.message, error.data));
+    next(
+      new ErrorResponse(
+        error.code || 500,
+        error.message || "Couldn't delete review",
+        error.data || "Something went wrong"
+      )
+    );
   }
 };
