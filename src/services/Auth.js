@@ -62,6 +62,7 @@ class Auth {
       if (!user) {
         throw new ErrorResponse(401, "Authentication Failed", "Invalid Token");
       }
+      return user;
     } catch (error) {
       throw new ErrorResponse(401, "Authentication Failed", "Invalid Token");
     }
