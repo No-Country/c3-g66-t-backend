@@ -167,6 +167,12 @@ const hotelIdRequired = query(
 const hotelIdNumeric = query("hotel_id", "hotel_id its not a number")
   .isNumeric()
   .optional();
+const adultsNumeric = query(
+  "adults_number",
+  "adults_number must be a number between 1 and 7"
+)
+  .isFloat({ min: 1, max: 7 })
+  .optional();
 
 exports.hotelListValidation = [
   localeIsValid,
@@ -174,6 +180,7 @@ exports.hotelListValidation = [
   checkinDateRegex,
   checkoutDateNotEmpty,
   checkoutDateRegex,
+  adultsNumeric,
   latitudeNotEmpty,
   latitudeNumeric,
   longitudeNotEmpty,
@@ -188,7 +195,17 @@ exports.hotelListValidation = [
   childrenAges,
   validResult,
 ];
-
+exports.hotelDetailsValidations = [
+  localeIsValid,
+  checkinDateNotEmpty,
+  checkinDateRegex,
+  adultsNumeric,
+  checkoutDateNotEmpty,
+  checkoutDateRegex,
+  currencyIsValid,
+  childrenAges,
+  validResult,
+];
 exports.reviewsValidations = [hotelIdRequired, hotelIdNumeric, validResult];
 exports.photosValidations = [hotelIdRequired, hotelIdNumeric, validResult];
 
