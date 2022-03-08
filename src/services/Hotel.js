@@ -51,10 +51,11 @@ class HotelService {
 
       return res.data.searchResults.results;
     } catch (error) {
+      console.log(error);
       throw new ErrorResponse(
         error.response.status,
-        error.response.message,
-        error.response.statusText
+        undefined,
+        error.response.data.detail
       );
     }
   }
@@ -70,8 +71,8 @@ class HotelService {
     } catch (error) {
       throw new ErrorResponse(
         error.response.status,
-        error.response.message,
-        error.response.statusText
+        undefined,
+        error.response.data.detail
       );
     }
   }
@@ -87,8 +88,8 @@ class HotelService {
     } catch (error) {
       throw new ErrorResponse(
         error.response.status,
-        error.response.message,
-        error.response.statusText
+        undefined,
+        error.response.data.detail
       );
     }
   }
