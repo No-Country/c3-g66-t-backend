@@ -60,6 +60,23 @@ class HotelService {
     }
   }
 
+  async getById() {
+    try {
+      const res = await axios.get(`${this._url}/booking-details`, {
+        params: { ...this._querys },
+        headers: { ...this._headers },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw new ErrorResponse(
+        error.response.status,
+        error.response.message,
+        error.response.statusText
+      );
+    }
+  }
+
   async getPhotoById() {
     try {
       const res = await axios.get(

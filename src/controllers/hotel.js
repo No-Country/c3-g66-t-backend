@@ -27,6 +27,21 @@ exports.list = async (req, res, next) => {
   }
 };
 
+exports.details = async (req, res, next) => {
+  try {
+    const data = await new HotelService(req.query).getById();
+    res.status(200).json(new Success(200, "Hotel Details", data));
+  } catch (error) {
+    next(
+      new ErrorResponse(
+        error.code,
+        error.message || "Couldn't get hotel details",
+        error.data || "Something went wrong"
+      )
+    );
+  }
+};
+
 exports.photos = async (req, res, next) => {
   try {
     const data = await new HotelService(req.query).getPhotoById();
