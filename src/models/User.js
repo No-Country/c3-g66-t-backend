@@ -9,6 +9,7 @@ const user = new Schema(
     phone: { type: String },
     password: { type: String, required: true },
     img: { type: String, required: true },
+    customerId: { type: String },
   },
   { timestamps: true }
 );
