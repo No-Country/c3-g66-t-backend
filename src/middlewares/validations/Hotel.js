@@ -248,3 +248,9 @@ exports.deleteReviewValidations = [
   reviewIdParamRequired,
   validResult,
 ];
+exports.hotelReservationValidations = [
+  validateJWT,
+  hotelIdRequired,
+  hotelIdNumeric,
+  validResult,
+];
