@@ -35,11 +35,11 @@ class Reservation {
   async createPayment(user, payment) {
     return await this.stripe.paymentIntents.create({
       customer: user.customerId || undefined,
-      currency: payment.currency || "USD",
+      currency: payment.currency,
       amount: payment.amount * 100,
       payment_method_types: ["card"],
       setup_future_usage: "on_session",
-      description: payment.hotelId,
+      description: payment.description,
     });
   }
   async addUserReservation(userId, data) {
@@ -54,13 +54,15 @@ class Reservation {
       payment_id,
       createdAt: Date(),
     };
-    await User.findById(userId)
+    return await User.findById(userId)
       .exec()
       .then(user => {
         if (!user) {
           throw new ErrorResponse(400, undefined, "User not found");
         }
         user.reservations.unshift(reservation);
+        user.save();
+        return user;
       });
   }
 }

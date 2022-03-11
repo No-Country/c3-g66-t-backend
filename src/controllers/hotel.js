@@ -130,13 +130,38 @@ exports.deleteReview = async (req, res, next) => {
 
 exports.reservPayment = async (req, res, next) => {
   try {
-    const { hotel_id, checkin_date, checkout_date } = req.query;
-    const { amount, currency } = req.body;
+    const { hotel_id, amount, currency, checkin_date, checkout_date } =
+      req.body;
     const data = await Reservations.createPayment(req.user, {
+      hotel_id,
       amount,
       currency,
+      checkin_date,
+      checkout_date,
     });
     res.status(202).json(new Success(202, "Reservation success", data));
+  } catch (error) {
+    next(
+      new ErrorResponse(
+        error.code || 500,
+        error.message || "Couldn't reserve",
+        error.data || "Something went wrong"
+      )
+    );
+  }
+};
+exports.paymentConfirmed = async (req, res, next) => {
+  try {
+    const userId = req.user._id.toString();
+    const { hotel_id, checkin_date, checkout_date, payment_id } = req.body;
+
+    const data = await Reservations.addUserReservation(userId, {
+      hotel_id,
+      checkin_date,
+      checkout_date,
+      payment_id,
+    });
+    res.status(200).json(new Success(200, "Reservation saved", data));
   } catch (error) {
     next(
       new ErrorResponse(

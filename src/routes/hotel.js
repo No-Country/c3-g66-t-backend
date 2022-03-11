@@ -9,6 +9,7 @@ const {
   deleteReview,
   details,
   reservPayment,
+  paymentConfirmed,
 } = require("../controllers/hotel");
 const {
   hotelListValidation,
@@ -19,6 +20,7 @@ const {
   deleteReviewValidations,
   hotelDetailsValidations,
   hotelReservationValidations,
+  paymentValidations,
 } = require("../middlewares/validations/Hotel");
 
 const router = Router();
@@ -28,6 +30,7 @@ router.route("/photos").get(photosValidations, photos);
 router.route("/reviews").get(reviewsValidations, reviews);
 router.route("/details").get(hotelDetailsValidations, details);
 router.route("/reserv").post(hotelReservationValidations, reservPayment);
+router.route("/paymentConfimed").post(paymentValidations, paymentConfirmed);
 router
   .route("/localreviews")
   .get(reviewsValidations, localReviews)
