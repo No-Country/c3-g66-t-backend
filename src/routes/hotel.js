@@ -8,6 +8,7 @@ const {
   editReview,
   deleteReview,
   details,
+  reservPayment,
 } = require("../controllers/hotel");
 const {
   hotelListValidation,
@@ -17,6 +18,7 @@ const {
   editReviewValidations,
   deleteReviewValidations,
   hotelDetailsValidations,
+  hotelReservationValidations,
 } = require("../middlewares/validations/Hotel");
 
 const router = Router();
@@ -25,6 +27,7 @@ router.route("/list").get(hotelListValidation, list);
 router.route("/photos").get(photosValidations, photos);
 router.route("/reviews").get(reviewsValidations, reviews);
 router.route("/details").get(hotelDetailsValidations, details);
+router.route("/reserv").post(hotelReservationValidations, reservPayment);
 router
   .route("/localreviews")
   .get(reviewsValidations, localReviews)
