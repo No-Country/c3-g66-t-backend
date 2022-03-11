@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const ErrorResponse = require("../../helpers/ErrorResponse");
 const User = require("../../models/User");
 const AuthService = require("../../services/Auth");
-
+const { DATE_REGEX } = require("../../config/constants");
 //    USER / AUTH
 exports.emailIsUniqueCheck = async email => {
   const userFound = await User.findOne({ email });
@@ -27,7 +27,12 @@ exports.validateJWT = async (req, res, next) => {
     );
   }
 };
-
+exports.DateFormat = value => {
+  if (!value.match(DATE_REGEX)) {
+    return false;
+  }
+  return true;
+};
 exports.validResult = (req, res, next) => {
   const err = validationResult(req);
   if (!err.isEmpty()) {

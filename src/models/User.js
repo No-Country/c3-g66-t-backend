@@ -9,6 +9,18 @@ const user = new Schema(
     phone: { type: String },
     password: { type: String, required: true },
     img: { type: String, required: true },
+    customerId: { type: String },
+    reservations: [
+      {
+        hotel_id: Number,
+        checkin_date: String,
+        checkout_date: String,
+        status: Boolean,
+        canceled: Boolean,
+        payment_id: String,
+        createdAt: Date,
+      },
+    ],
   },
   { timestamps: true }
 );

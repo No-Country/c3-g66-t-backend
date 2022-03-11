@@ -51,7 +51,6 @@ class HotelService {
 
       return res.data.searchResults.results;
     } catch (error) {
-      console.log(error);
       throw new ErrorResponse(
         error.response.status,
         undefined,

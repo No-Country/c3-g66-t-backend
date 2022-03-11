@@ -31,4 +31,8 @@ module.exports = {
     host: process.env.HOTELS_HOST || "hotels-com-provider.p.rapidapi.com",
     key: process.env.HOTELS_KEY || process.env.API_KEY,
   },
+  stripe: {
+    secret_key: process.env.STRIPE_SECRET_KEY,
+    pusheable_key: process.env.STRIPE_PUSHEABLE_KEY,
+  },
 };

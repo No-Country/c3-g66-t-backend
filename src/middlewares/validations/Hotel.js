@@ -1,9 +1,8 @@
 const { query, body, param } = require("express-validator");
 
-const { validResult, validateJWT } = require("./commons");
+const { validResult, validateJWT, DateFormat } = require("./commons");
 const {
   LOCALE_ENUM,
-  DATE_REGEX,
   ORDER_ENUM,
   CURRENCY_ENUM,
   AMENITIES_ENUM,
@@ -30,12 +29,7 @@ const checkinDateNotEmpty = query(
 const checkinDateRegex = query("checkin_date")
   .isString()
   .withMessage("checkin_date query must be a string")
-  .custom(value => {
-    if (!value.match(DATE_REGEX)) {
-      return false;
-    }
-    return true;
-  })
+  .custom(DateFormat)
   .withMessage("checkin_date format must be YYYY-MM-DD")
   .optional();
 
@@ -47,12 +41,7 @@ const checkoutDateNotEmpty = query(
 const checkoutDateRegex = query("checkout_date")
   .isString()
   .withMessage("checkout_date query must be a string")
-  .custom(value => {
-    if (!value.match(DATE_REGEX)) {
-      return false;
-    }
-    return true;
-  })
+  .custom(DateFormat)
   .withMessage("checkout_date format must be YYYY-MM-DD")
   .optional();
 
@@ -246,5 +235,63 @@ exports.editReviewValidations = [
 exports.deleteReviewValidations = [
   validateJWT,
   reviewIdParamRequired,
+  validResult,
+];
+const amountRequired = body("amount", "amount is required").notEmpty();
+const amountNumeric = body("amount").isNumeric().optional();
+const bodyHotelIdRequired = body("hotel_id", "hotel_id is required").notEmpty();
+const bodyHotelIdString = body("hotel_id", "hotel_id must be a number")
+  .isNumeric()
+  .optional();
+const bodyCheckinDateRequired = body(
+  "checkin_date",
+  "checkin_date  is required"
+).notEmpty();
+const bodyCheckinDateFormat = body("checkin_date")
+  .isString()
+  .withMessage("checkout_date query must be a string")
+  .custom(DateFormat)
+  .withMessage("checkout_date format must be YYYY-MM-DD")
+  .optional();
+const bodyCheckoutDateRequired = body(
+  "checkout_date",
+  "checkout_date  is required"
+).notEmpty();
+const bodyCheckoutDateFormat = body("checkout_date")
+  .isString()
+  .withMessage("checkout_date query must be a string")
+  .custom(DateFormat)
+  .withMessage("checkout_date format must be YYYY-MM-DD")
+  .optional();
+const paymentIdRequired = body(
+  "payment_id",
+  "payment_id is required"
+).notEmpty();
+const paymentIdString = body("payment_id", "payment_id is string")
+  .isString()
+  .optional();
+
+exports.hotelReservationValidations = [
+  validateJWT,
+  bodyHotelIdRequired,
+  bodyHotelIdString,
+  amountRequired,
+  amountNumeric,
+  bodyCheckinDateRequired,
+  bodyCheckinDateFormat,
+  bodyCheckoutDateRequired,
+  bodyCheckoutDateFormat,
+  validResult,
+];
+exports.paymentValidations = [
+  validateJWT,
+  bodyHotelIdRequired,
+  bodyHotelIdString,
+  bodyCheckinDateRequired,
+  bodyCheckinDateFormat,
+  bodyCheckoutDateRequired,
+  bodyCheckoutDateFormat,
+  paymentIdRequired,
+  paymentIdString,
   validResult,
 ];
