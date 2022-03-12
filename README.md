@@ -36,8 +36,8 @@ Ailen Olha
 
 Lisandro Perrotta
 - [Github](https://github.com/LisandroPer)
-- [LinkedIn]()
+- [LinkedIn](https://www.linkedin.com/in/lisandro-perrotta-8a5953228/)
 
 Brenda Nahomi Quispe Gonzales
 - [Github](https://github.com/AdnerbImohan1107)
-- [LinkedIn]()
+- [LinkedIn](https://www.linkedin.com/in/brendanahomi/)
